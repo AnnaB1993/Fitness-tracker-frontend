@@ -1,5 +1,5 @@
 import React from "react";
-import { clearCurrentUser, getCurrentUser, storeCurrentUser } from "../auth";
+import { clearCurrentUser, getCurrentUser, clearCurrentToken, storeCurrentUser } from "../auth";
 import { useHistory } from "react-router-dom";
 
 const Logout = ({ setUser, setToken }) => {
@@ -13,6 +13,7 @@ const Logout = ({ setUser, setToken }) => {
         onClick={(e) => {
           e.preventDefault();
           clearCurrentUser();
+          clearCurrentToken();
           setUser("");
           setToken("");
           history.push("/home");

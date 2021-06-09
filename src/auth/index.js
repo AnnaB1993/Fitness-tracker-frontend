@@ -10,3 +10,15 @@ export function getCurrentUser() {
 export function clearCurrentUser() {
   localStorage.removeItem("currentUser");
 }
+
+export function storeCurrentToken(token) {
+  localStorage.setItem("token", token);
+}
+
+export function getCurrentToken() {
+  return localStorage.getItem("token");
+}
+
+export function clearCurrentToken() {
+  localStorage.removeItem("token");
+}

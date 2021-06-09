@@ -1,0 +1,20 @@
+.routine{
+    display: flex;
+    justify-items: start;
+    flex-direction: column;
+    border: 2px solid pink;
+    margin: 10px;
+    padding: 0;
+    height: 200px;
+    width: 400px;
+    overflow-y: scroll;
+    /* background-color: rgb(135, 141, 58); */
+}
+#name-id{
+    font-size: 20px;
+    font-weight: 600;
+    color: rgb(51, 2, 49);
+}
+#creatorName-id{
+    color: darkblue;
+}

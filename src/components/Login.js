@@ -1,11 +1,7 @@
 import React, { useState } from "react";
-import { loginUser } from "../api";
+import { loginUser, getMe} from "../api";
 import { useHistory } from "react-router";
-import {
-  storeCurrentUser,
-  clearCurrentUser,
-  getCurrentUser,
-} from "../auth";
+import { storeCurrentUser, clearCurrentUser, getCurrentUser, storeCurrentToken} from "../auth";
 
 const Login = ({ setUser, setToken }) => {
   const [name, setName] = useState("");
@@ -20,8 +16,9 @@ const Login = ({ setUser, setToken }) => {
         const response = await loginUser({ username: name, password });
         if (response.status === 200) {
           storeCurrentUser(response.data.user);
-          setUser(response.data.user);
+          storeCurrentToken(response.data.token);
           setToken(response.data.token);
+          setUser(response.data.user);
           history.push("/home");
         } else if (response.status === 401) {
           console.error(response.data.message);

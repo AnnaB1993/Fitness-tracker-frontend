@@ -18,21 +18,28 @@ import {
   Register,
   Login,
   Logout,
+  MyRoutines,
+  NewActivity,
+  SingleRoutine,
+  NewRoutine
 } from "./components";
-import { getAllRoutines, getAllActivities } from "./api";
+import {
+  getAllRoutines,
+  getAllActivities,
+  getMe,
+  getUserRoutines,
+} from "./api";
 
-// import {
-//   clearCurrentUser,
-//   getCurrentUser,
-//   storeCurrentUser,
-// } from "../auth";
+import { getCurrentUser, getCurrentToken } from "./auth";
 
 const App = () => {
-  const [user, setUser] = useState({});
-  const [token, setToken] = useState("");
+  const [user, setUser] = useState(getCurrentUser());
+  const [token, setToken] = useState(getCurrentToken());
 
   const [routinesList, setRoutines] = useState([]);
   const [activitiesList, setActivities] = useState([]);
+  const [userRoutines, setUserRoutines] = useState([]);
+  const [userActivities, setUserActivities] = useState([]);
 
   useEffect(() => {
     getAllRoutines()
@@ -47,6 +54,17 @@ const App = () => {
         console.error(error);
       });
   }, []);
+
+  useEffect(() => {
+
+    // getCurrentToken()
+    // .then((token) => 
+    getUserRoutines(token)
+      .then((routines) => setUserRoutines(routines))
+      .catch((error) => console.error(error));
+
+      
+  }, [user]);
 
   return (
     <Router>
@@ -71,12 +89,12 @@ const App = () => {
           <Route path="/logout">
             <Logout setUser={setUser} setToken={setToken} />
           </Route>
-          {/* <Route path="/my-routines">
-            <Routines routinesList={routinesList} />
+          <Route path="/my-routines">
+            <MyRoutines userRoutines={userRoutines} setUserRoutines={setUserRoutines}/>
           </Route>
           <Route path="/my-activities">
-            <Routines routinesList={routinesList} />
-          </Route> */}
+            <NewActivity activitiesList={activitiesList}/>
+          </Route>
         </Switch>
       </div>{" "}
     </Router>

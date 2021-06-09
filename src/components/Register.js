@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
-import { registerUser } from "../api";
+import { registerUser, makeNewRoutine } from "../api";
+import { storeCurrentToken, storeCurrentUser } from "../auth";
 
 const Register = (props) => {
   const { setUser, setToken } = props;
@@ -17,15 +18,17 @@ const Register = (props) => {
         const response = await registerUser({ username: name, password });
         console.log(response);
         if (response.status === 200) {
+          storeCurrentUser(response.data.user);
+          storeCurrentToken(response.data.token);
           setUser(response.data.user);
           setToken(response.data.token);
           history.push("/home");
           //update state and redirect
         } else if (response.status === 401) {
           //error message from the response
-          console.error(response.data.message)
+          console.error(response.data.message);
         } else {
-          alert("something went wrong, try again")
+          alert("something went wrong, try again");
           //show generic error message
         }
       }}
