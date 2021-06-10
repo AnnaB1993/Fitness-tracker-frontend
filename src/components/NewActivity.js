@@ -1,16 +1,20 @@
 import React, { useState } from "react";
 import { makeNewActivity } from "../api";
+import { useHistory } from "react-router-dom";
+import { getCurrentUser, getCurrentToken } from "../auth";
 
-const NewActivity = ({ activitiesList }) => {
+const NewActivity = ({ activitiesList, setActivities }) => {
   const [name, setNameActivity] = useState("");
   const [description, setDescription] = useState("");
+  const history = useHistory();
   return (
     <form
       id="new-activity"
       onSubmit={async (e) => {
         e.preventDefault();
         const response = await makeNewActivity(name, description);
-        // activitiesList.push(response);
+        setActivities([...activitiesList, response]);
+        history.push("/activities");
         console.log(response);
       }}
     >

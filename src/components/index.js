@@ -7,3 +7,4 @@ export { default as Login } from "./Login";
 export { default as Logout } from "./Logout";
 export { default as MyRoutines } from "./MyRoutines";
 export { default as NewActivity } from "./NewActivity";
+export { default as UpdateRoutine } from "./UpdateRoutine";

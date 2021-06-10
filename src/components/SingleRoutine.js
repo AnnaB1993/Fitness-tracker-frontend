@@ -1,24 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { deleteRoutine } from "../api";
+import { deleteRoutine, updateRoutine } from "../api";
 import { getCurrentUser } from "../auth";
 import "./SingleRoutine.css";
+import UpdateRoutine from "./UpdateRoutine";
 
-const SingleRoutine = ({
-  singleRoutine,
-  routinesList,
-  setUserRoutines,
-  userRoutines,
-}) => {
+const SingleRoutine = ({ singleRoutine, setUserRoutines, userRoutines, UpdateRoutine }) => {
   const user = getCurrentUser();
   const { id, name, creatorName, goal, activities } = singleRoutine;
+
   const deleteRoutineHandler = async (routineId) => {
     const result = await deleteRoutine(routineId);
-
-    const newArrayRoutines = userRoutines.filter(
+    console.log(userRoutines);
+    let newArrayRoutines = userRoutines.filter(
       (singleRoutine) => singleRoutine.id !== result.id
     );
     setUserRoutines(newArrayRoutines);
   };
+
+  // const updateRoutineHandler = async (routineId) => {
+  //   <UpdateRoutine singleRoutine={singleRoutine}/>
+  //   const result = await updateRoutine(routineId, { name, goal });
+  //   setUserRoutines([...userRoutines, result]);
+  // };
 
   return (
     <div className="routine">
@@ -43,7 +46,15 @@ const SingleRoutine = ({
           })}
         {user && user.username === creatorName ? (
           <footer>
-            <button>Update</button>
+            <button
+              id="update-button"
+              onClick={(e) => {
+                e.preventDefault();
+                // updateRoutineHandler(singleRoutine.id);
+              }}
+            >
+              Update
+            </button>
             <button
               id="delete-routine-button"
               onClick={(e) => {

@@ -56,15 +56,14 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-
-    // getCurrentToken()
-    // .then((token) => 
+ 
     getUserRoutines(token)
-      .then((routines) => setUserRoutines(routines))
+      .then((routines) => setUserRoutines(routines || []))
       .catch((error) => console.error(error));
 
       
   }, [user]);
+  console.log("HERE", userRoutines)
 
   return (
     <Router>
@@ -93,7 +92,7 @@ const App = () => {
             <MyRoutines userRoutines={userRoutines} setUserRoutines={setUserRoutines}/>
           </Route>
           <Route path="/my-activities">
-            <NewActivity activitiesList={activitiesList}/>
+            <NewActivity activitiesList={activitiesList} setActivities={setActivities}/>
           </Route>
         </Switch>
       </div>{" "}

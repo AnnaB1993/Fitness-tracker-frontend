@@ -105,18 +105,22 @@ export async function makeNewRoutine(name, goal, isPublic) {
 export async function makeNewActivity(name, description) {
   const token = getCurrentToken();
   try {
-    return await fetch("https://fitnesstrac-kr.herokuapp.com/api/activities", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        name,
-        description,
-      }),
-    });
-    // const result = await response.json();
+    const response = await fetch(
+      "https://fitnesstrac-kr.herokuapp.com/api/activities",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          name,
+          description,
+        }),
+      }
+    );
+    const result = await response.json();
+    return result;
     // console.log(result);
     // return result;
   } catch (error) {
@@ -127,7 +131,7 @@ export async function makeNewActivity(name, description) {
 export async function deleteRoutine(routineId) {
   const token = getCurrentToken();
   try {
-    const response = fetch(`${BASE}/routines/${routineId}`, {
+    const response = await fetch(`${BASE}/routines/${routineId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -136,6 +140,26 @@ export async function deleteRoutine(routineId) {
     });
     const result = await response.json();
     return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function updateRoutine(routineId, { routineObj }) {
+  const token = getCurrentToken();
+  try {
+    const response = await fetch(
+      `https://fitnesstrac-kr.herokuapp.com/api/routines/${routineId}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(routineObj),
+      }
+    );
+    return response.json();
   } catch (error) {
     console.error(error);
   }

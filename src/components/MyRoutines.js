@@ -6,17 +6,18 @@ import { getCurrentUser } from "../auth";
 
 const MyRoutines = ({ userRoutines, setUserRoutines }) => {
   const user = getCurrentUser();
-  console.log(userRoutines);
+  // console.log(userRoutines);
   return (
     <div className="user-routines">
       {userRoutines ? (
         userRoutines.map((routine) => {
-          // const { name, creatorName, goal, activities } = routine;
+          
           return ( 
             <SingleRoutine 
               key={routine.id}
               singleRoutine={routine}
               setUserRoutines={setUserRoutines}
+              userRoutines={userRoutines}
             />
           );
         })
